@@ -1,0 +1,2 @@
+setopt PROMPT_SUBST
+PROMPT='%F{010}%n@%m%f:%F{014}%~%f $(git_prompt_info)$(kube_prompt_info)%F{010}➜%f '

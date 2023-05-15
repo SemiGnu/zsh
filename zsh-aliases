@@ -1,0 +1,11 @@
+# ls
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# kubectl
+alias kns=k8s_set_namespace
+alias k=kubectl
+alias kcuc='kubectl config use-context'
+alias kccc='kubectl config current-context'
+alias kcgc='kubectl config get-contexts'

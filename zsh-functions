@@ -1,0 +1,94 @@
+function zsh_add_file() {
+    # echo "$ZSH_CONFIG_PATH/$1"
+    [ -f "$ZSH_CONFIG_PATH/$1" ] && source "$ZSH_CONFIG_PATH/$1"
+}
+
+function zsh_add_plugin() {
+    PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+    if [[ -d "$ZSH_CONFIG_PATH/plugins/$PLUGIN_NAME" ]]; then 
+        # For plugins
+        zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
+        zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
+    else
+        git clone "https://github.com/$1.git" "$ZSH_CONFIG_PATH/plugins/$PLUGIN_NAME"
+    fi
+}
+
+function zsh_add_completion() {
+    PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+    if [ -d "$ZSH_CONFIG_PATH/plugins/$PLUGIN_NAME" ]; then 
+        # For completions
+		completion_file_path=$(ls $ZSH_CONFIG_PATH/plugins/$PLUGIN_NAME/_*)
+		fpath+="$(dirname "${completion_file_path}")"
+        zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh"
+    else
+        git clone "https://github.com/$1.git" "$ZSH_CONFIG_PATH/plugins/$PLUGIN_NAME"
+		fpath+=$(ls $ZSH_CONFIG_PATH/plugins/$PLUGIN_NAME/_*)
+        [ -f $ZSH_CONFIG_PATH/.zccompdump ] && $ZSH_CONFIG_PATH/.zccompdump
+    fi
+	completion_file="$(basename "${completion_file_path}")"
+	if [ "$2" = true ] && compinit "${completion_file:1}"
+}
+
+function k8s_set_namespace () {
+    ns=$1
+    if [[ -z $ns ]]
+    then
+        ns=defualt
+    fi
+    kubectl config set-context --current --namespace=$ns
+}
+
+function _k8s_set_namespace () {
+    kns_completions="($(kubectl get namespaces | tail -n +2 | awk '{print "\047"$1"\047"}' | tr "\n" " "))"
+    _describe 'command' $kns_completions
+}
+compdef _k8s_set_namespace k8s_set_namespace
+
+function kube_prompt_info () {  
+    k8s_context=$(kubectl config get-contexts | grep '*')   
+    k8s_context_name=$(echo $k8s_context | awk '{print $2}')
+    k8s_context_namespace=$(echo $k8s_context | awk '{print $5}')
+    if [[ -z $k8s_context_namespace ]]
+    then
+        k8s_context_namespace='default'
+    fi
+
+    main_color='012'
+    ctx_color='009'
+
+    if [[ $k8s_context_name = "local" ]]
+    then
+        ctx_color='010'
+    fi
+
+    kube_prompt="%F{$main_color}k8s:(%f%F{$ctx_color}$k8s_context_name/$k8s_context_namespace%f%F{$main_color})%f "
+
+    echo $kube_prompt
+}
+
+function git_prompt_info() {
+    if [[ ! -d .git ]]
+    then
+        return
+    fi
+    git_status=$(git status)
+    git_branch=$(echo $git_status | grep 'On branch' | awk '{print $3}')
+    main_color='012'
+    git_status_color='010'
+    if [[ $git_branch = "main" ]]
+    then
+        git_status_color='009'
+    fi
+
+    git_change=""
+    
+    if [[ ! $git_status =~ "working tree clean" ]]
+    then
+        git_change="%F{011}!%f"
+    fi
+
+    git_prompt_info="%F{$main_color}git:(%f%F{$git_status_color}$git_branch%f%F{$main_color})%f$git_change "
+
+    echo $git_prompt_info
+}
