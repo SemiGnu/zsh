@@ -10,7 +10,7 @@ function kube_prompt_info () {
     main_color='012'
     ctx_color='009'
 
-    if [[ $k8s_context_name = "local" ]]
+    if [[ $k8s_context_name = $K8S_MAIN_CONTEXT ]]
     then
         ctx_color='010'
     fi

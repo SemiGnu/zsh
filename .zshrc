@@ -10,6 +10,7 @@ HISTFILE=~/.zsh_history
 autoload -Uz compinit
 compinit
 
+export K8S_MAIN_CONTEXT='docker-desktop'
 export ZSH_CONFIG_PATH="$HOME/git/semignu/zsh"
 source "$ZSH_CONFIG_PATH/zsh-functions"
 
