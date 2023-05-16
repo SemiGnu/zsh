@@ -51,4 +51,4 @@ if [[ ! -z $USE_NAME_HOST ]]; then
 fi
 
 setopt PROMPT_SUBST
-PROMPT="$NAME_HOST%F{014}%~%f $(git_prompt_info)$(kube_prompt_info)%F{010}➜%f "
+PROMPT="$NAME_HOST"'%F{014}%~%f $(git_prompt_info)$(kube_prompt_info)%F{010}➜%f '
