@@ -21,10 +21,10 @@ function kube_prompt_info () {
 }
 
 function git_prompt_info() {
-    git_status=$(git status)
-    if [[ $status =~ "not a git repository" ]]; then
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
         return
     fi
+    git_status=$(git status)
     git_branch=$(echo $git_status | grep 'On branch' | awk '{print $3}')
     main_color='012'
     git_status_color='010'
@@ -42,7 +42,7 @@ function git_prompt_info() {
 
     git_prompt_info="%F{$main_color}git:(%f%F{$git_status_color}$git_branch%f%F{$main_color})%f$git_change "
 
-    echo $git_prompt_info
+    echo $git_prompt_info$testtest
 }
 
 if [[ ! -z $USE_NAME_HOST ]]; then
