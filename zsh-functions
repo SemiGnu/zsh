@@ -34,7 +34,7 @@ function k8s_set_namespace () {
     ns=$1
     if [[ -z $ns ]]
     then
-        ns=defualt
+        ns=default
     fi
     kubectl config set-context --current --namespace=$ns
 }
@@ -44,3 +44,8 @@ function _k8s_set_namespace () {
     _describe 'command' $kns_completions
 }
 compdef _k8s_set_namespace k8s_set_namespace
+
+function git_add_all_and_commit () {
+    git add -A
+    git commit -m "$1"
+}
