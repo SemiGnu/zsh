@@ -10,11 +10,16 @@ HISTFILE=~/.zsh_history
 autoload -Uz compinit
 compinit
 
+# export WSL='true' # Uncomment if running in WSL
 export USE_NAME_HOST='true' # Show username and hostname in prompt, comment to hide
 export K8S_MAIN_CONTEXT='docker-desktop' # Set main k8s context, will be green
 export ZSH_CONFIG_PATH="$HOME/git/semignu/zsh" # Path to zsh config repos
 
 source "$ZSH_CONFIG_PATH/zsh-functions"
+
+if [[ $WSL = 'true' ]] ; then
+    zsh_add_file 'zsh-wsl'
+fi    
 
 zsh_add_file 'zsh-aliases'
 zsh_add_file 'zsh-prompt'
