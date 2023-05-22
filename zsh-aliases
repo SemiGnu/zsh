@@ -9,6 +9,7 @@ alias k=kubectl
 alias kcuc='kubectl config use-context'
 alias kccc='kubectl config current-context'
 alias kcgc='kubectl config get-contexts'
+alias kaf='kubectl apply -f'
 
 # git
 alias gitac=git_add_all_and_commit

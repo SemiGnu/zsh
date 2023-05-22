@@ -49,3 +49,12 @@ function git_add_all_and_commit () {
     git add -A
     git commit -m "$1"
 }
+
+function _dotnet_zsh_complete()
+{
+  local completions=("$(dotnet complete "$words")")
+
+  reply=( "${(ps:\n:)completions}" )
+}
+
+compctl -K _dotnet_zsh_complete dotnet
