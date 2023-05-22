@@ -11,4 +11,4 @@ alias kccc='kubectl config current-context'
 alias kcgc='kubectl config get-contexts'
 
 # git
-alias gitca=git_add_all_and_commit
+alias gitac=git_add_all_and_commit
