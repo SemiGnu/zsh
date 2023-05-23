@@ -15,9 +15,9 @@ function kube_prompt_info () {
         ctx_color='010'
     fi
 
-    kube_prompt="%F{$main_color}k8s:(%f%F{$ctx_color}$k8s_context_name/$k8s_context_namespace%f%F{$main_color})%f "
+    kube_prompt_info="%F{$main_color}k8s:(%f%F{$ctx_color}$k8s_context_name/$k8s_context_namespace%f%F{$main_color})%f "
 
-    echo $kube_prompt
+    echo $kube_prompt_info
 }
 
 function git_prompt_info() {
@@ -42,8 +42,19 @@ function git_prompt_info() {
 
     git_prompt_info="%F{$main_color}git:(%f%F{$git_status_color}$git_branch%f%F{$main_color})%f$git_change "
 
-    echo $git_prompt_info$testtest
+    echo $git_prompt_info
 }
+
+function az_prompt_info() {
+    main_color='012'
+    sub_color='010'
+    sub_name=$(az account show | grep -o '^  "name": "[^"]*' | grep -o '[^"]*$')
+    az_prompt_info="%F{$main_color}az:(%f%F{$sub_color}$sub_name%f%F{$main_color})%f$git_change "
+    echo $az_prompt_info
+}
+
+
+
 
 if [[ ! -z $USE_NAME_HOST ]]; then
     NAME_HOST='%F{010}%n@%m%f:'

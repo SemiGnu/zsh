@@ -13,3 +13,4 @@ alias kaf='kubectl apply -f'
 
 # git
 alias gitac=git_add_all_and_commit
+alias gitpnb=git_push_new_branch
