@@ -1,3 +1,4 @@
+# Base
 function zsh_add_file() {
     # echo "$ZSH_CONFIG_PATH/$1"
     [ -f "$ZSH_CONFIG_PATH/$1" ] && source "$ZSH_CONFIG_PATH/$1"
@@ -30,6 +31,7 @@ function zsh_add_completion() {
 	if [ "$2" = true ] && compinit "${completion_file:1}"
 }
 
+# k8s
 function k8s_set_namespace () {
     ns=$1
     if [[ -z $ns ]]
@@ -45,15 +47,23 @@ function _k8s_set_namespace () {
 }
 compdef _k8s_set_namespace k8s_set_namespace
 
+
+# Git
 function git_push_new_branch () {
     current_branch=$(git branch --show-current)
     git push --set-upstream origin $current_branch
 }
 
+function git_add_all_and_commit () {
+    git add -A
+    git commit -m "$1"
+}
+
+# dotnet
 function _dotnet_zsh_complete()
 {
   local completions=("$(dotnet complete "$words")")
-
   reply=( "${(ps:\n:)completions}" )
 }
 compctl -K _dotnet_zsh_complete dotnet
+

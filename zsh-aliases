@@ -12,5 +12,5 @@ alias kcgc='kubectl config get-contexts'
 alias kaf='kubectl apply -f'
 
 # git
-alias gcam="git commit -am"
+alias gcam=git_add_all_and_commit
 alias gpnb=git_push_new_branch
