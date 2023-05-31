@@ -14,10 +14,10 @@ compinit
 export USE_NAME_HOST='true' # Show username and hostname in prompt, comment to hide
 export K8S_MAIN_CONTEXT='docker-desktop' # Set main k8s context, will be green
 export ZSH_CONFIG_PATH="$HOME/git/semignu/zsh" # Path to zsh config repos
-export AZ_CONFIG_PATH="$HOME/.azure" # Path to az config repos
+export AZ_CONFIG_PATH="/mnt/c/Users/twinj/.azure" # Path to az config repos
 
-export K8S_PROMPT_ENABLED='false'
-export AZ_PROMPT_ENABLED='false'
+export K8S_PROMPT_ENABLED='true'
+export AZ_PROMPT_ENABLED='true'
 
 source "$ZSH_CONFIG_PATH/zsh-functions"
 

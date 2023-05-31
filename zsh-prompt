@@ -1,4 +1,8 @@
 function kube_prompt_info () {  
+    if [[ $K8S_PROMPT_ENABLED != 'true' ]]
+    then
+        return
+    fi
     k8s_context=$(kubectl config get-contexts | grep '*')   
     k8s_context_name=$(echo $k8s_context | awk '{print $2}')
     k8s_context_namespace=$(echo $k8s_context | awk '{print $5}')
@@ -46,9 +50,13 @@ function git_prompt_info() {
 }
 
 function az_prompt_info() {
+    if [[ $AZ_PROMPT_ENABLED != 'true'  ]]
+    then
+        return
+    fi
     main_color='012'
     sub_color='010'
-    sub_name=$(az account show | grep -o '^  "name": "[^"]*' | grep -o '[^"]*$')
+    sub_name=$(jq -r '.subscriptions[] | select(.isDefault == true) | .name' /mnt/c/Users/twinj/.azure/azureProfile.json)
     az_prompt_info="%F{$main_color}az:(%f%F{$sub_color}$sub_name%f%F{$main_color})%f$git_change "
     echo $az_prompt_info
 }
@@ -61,7 +69,7 @@ if [[ ! -z $USE_NAME_HOST ]]; then
 fi
 
 setopt PROMPT_SUBST
-PROMPT="$NAME_HOST"'%F{014}%~%f $(git_prompt_info)$(kube_prompt_info)%F{010}➜%f '
+PROMPT="$NAME_HOST"'%F{014}%~%f $(git_prompt_info)$(kube_prompt_info)$(az_prompt_info)%F{010}➜%f '
 
 
 # ✗ ✓ ➘ ➚
