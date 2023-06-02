@@ -1,5 +1,5 @@
 
-export PATH="/snap/bin:$PATH"
+export PATH="/snap/bin:$HOME/.dotnet/tools:$PATH"
 export KUBECONFIG=/mnt/c/Users/twinj/.kube/config
 
 function winhome {
