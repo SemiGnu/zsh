@@ -56,7 +56,7 @@ function az_prompt_info() {
     fi
     main_color='012'
     sub_color='010'
-    sub_name=$(jq -r '.subscriptions[] | select(.isDefault == true) | .name' /mnt/c/Users/twinj/.azure/azureProfile.json)
+    sub_name=$(jq -r '.subscriptions[] | select(.isDefault == true) | .name' $AZ_CONFIG_PATH/azureProfile.json)
     az_prompt_info="%F{$main_color}az:(%f%F{$sub_color}$sub_name%f%F{$main_color})%f$git_change "
     echo $az_prompt_info
 }
