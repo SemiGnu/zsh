@@ -1,6 +1,5 @@
 function kube_prompt_info () {  
-    if [[ $K8S_PROMPT_ENABLED != 'true' ]]
-    then
+    if [[ ! -f $ZSH_CONFIG_PATH/toggles/.k8s || ! -f $HOME/.kube/config ]]; then
         return
     fi
     k8s_context=$(kubectl config get-contexts | grep '*')   
@@ -50,7 +49,7 @@ function git_prompt_info() {
 }
 
 function az_prompt_info() {
-    if [[ $AZ_PROMPT_ENABLED != 'true'  ]]
+    if [[ ! -f $ZSH_CONFIG_PATH/toggles/.az || ! -f $AZ_CONFIG_PATH/azureProfile.json ]]
     then
         return
     fi

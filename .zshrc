@@ -16,14 +16,15 @@ export K8S_MAIN_CONTEXT='docker-desktop' # Set main k8s context, will be green
 export ZSH_CONFIG_PATH="$HOME/git/semignu/zsh" # Path to zsh config repos
 export AZ_CONFIG_PATH="$HOME/.azure" # Path to az config repos
 
-export K8S_PROMPT_ENABLED='false'
-export AZ_PROMPT_ENABLED='false'
-
 source "$ZSH_CONFIG_PATH/zsh-functions"
 
 if [[ $WSL = 'true' ]] ; then
     zsh_add_file 'zsh-wsl'
 fi    
+if (command -v dotnet &> /dev/null) ; then
+    export PATH="$HOME/.dotnet/tools:$PATH"
+fi
+
 
 zsh_add_file 'zsh-aliases'
 zsh_add_file 'zsh-prompt'

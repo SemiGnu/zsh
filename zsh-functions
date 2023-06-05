@@ -31,6 +31,20 @@ function zsh_add_completion() {
 	if [ "$2" = true ] && compinit "${completion_file:1}"
 }
 
+function zsh_prompt_toggle () {
+    if [[ $1 = "k8s" && ! -f $ZSH_CONFIG_PATH/toggles/.k8s ]]; then
+        mkdir -p $ZSH_CONFIG_PATH/toggles &> /dev/null
+        touch $ZSH_CONFIG_PATH/toggles/.k8s
+    elif [[ $1 = "k8s" && -f $ZSH_CONFIG_PATH/toggles/.k8s  ]]; then
+        rm $ZSH_CONFIG_PATH/toggles/.k8s
+    elif [[ $1 = "az"  &&  ! -f $ZSH_CONFIG_PATH/toggles/.az ]]; then
+        mkdir -p $ZSH_CONFIG_PATH/toggles &> /dev/null
+        touch $ZSH_CONFIG_PATH/toggles/.az
+    elif [[ $1 = "az"  &&  -f $ZSH_CONFIG_PATH/toggles/.az ]]; then
+        rm $ZSH_CONFIG_PATH/toggles/.az
+    fi
+}
+
 # k8s
 function k8s_set_namespace () {
     ns=$1
