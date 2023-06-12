@@ -1,15 +1,3 @@
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
-bindkey "\e[1;3C" forward-word
-bindkey "\e[1;3D" backward-word
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-bindkey "^[[3~" delete-char
-bindkey "^[[F" end-of-line
-bindkey "^[[H" beginning-of-line
-bindkey "^[[3;5~" kill-word
-bindkey "^H" backward-kill-word
-
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
 SAVEHIST=1000
@@ -18,6 +6,7 @@ HISTFILE=~/.zsh_history
 # Use modern completion system
 autoload -Uz compinit
 compinit
+zle_highlight+=(paste:none)
 
 # export WSL='true' # Uncomment if running in WSL
 export USE_NAME_HOST='true' # Show username and hostname in prompt, comment to hide
@@ -37,6 +26,8 @@ fi
 
 zsh_add_file 'zsh-aliases'
 zsh_add_file 'zsh-prompt'
+zsh_add_file 'zsh-keybinds'
+
 
 zsh_add_plugin 'zsh-users/zsh-autosuggestions'
 zsh_add_plugin 'zsh-users/zsh-syntax-highlighting'
