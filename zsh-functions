@@ -82,3 +82,34 @@ function _dotnet_zsh_complete()
 compctl -K _dotnet_zsh_complete dotnet
 
 source <(kubectl completion zsh)
+
+
+# encoding
+function b64e() {
+    echo -n $1 | base64
+}
+
+function b64d() {
+    echo -n $1 | base64 -d
+}
+
+function urld() {
+    echo -n $1 | sed 's/%/\\x/g' | xargs -0 printf "%b"
+}
+
+function urle() {
+  local string="${1}"
+  local strlen=${#string}
+  local encoded=""
+  local pos c o
+
+  for (( pos=0 ; pos<strlen ; pos++ )); do
+     c=${string:$pos:1}
+     case "$c" in
+        [-_.~a-zA-Z0-9] ) o="${c}" ;;
+        * )               printf -v o '%%%02x' "'$c"
+     esac
+     encoded+="${o}"
+  done
+  echo "${encoded}"    
+}
