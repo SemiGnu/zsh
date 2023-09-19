@@ -14,3 +14,9 @@ alias kaf='kubectl apply -f'
 # git
 alias gcam=git_add_all_and_commit
 alias gpnb=git_push_new_branch
+
+# dotnet ef
+alias def='dotnet ef'
+alias defma='dotnet ef migrations add'
+alias defmr='dotnet ef migrations remove'
+alias defdu='dotnet ef database update'
